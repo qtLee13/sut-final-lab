@@ -1,0 +1,24 @@
+package entity
+import(
+	"testing"
+	"github.com/asaskevich/govalidator"
+	"github.com/onsi/gomega"
+)
+func EmployeeCodeInvalidTest (t *testing.T){
+	g := gomega.NewGomegaWithT(t)
+
+	t.Run(`Employees is valid`,func(t *testing.T) {
+		employees := Employees{
+			Name: "Waraphon",
+			Salary: 20000,
+			EmployeeCode: "HR-14",
+		}
+		ok, err := govalidator.ValidateStruct(employees)
+
+		g.Expect(ok).To(gomega.BeTrue())
+		g.Expect(err).To(gomega.BeNil())
+
+		g.Expect(err.Error()).To(gomega.Equal("“EmployeeCode must be 2 uppercase English letters (A-Z) followed by ‘-’ and 4 digits (0-9)"))
+
+	})
+}
